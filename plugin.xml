@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+     <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.select_layout">
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Circle Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="c">
+            </parameter>
+         </command>
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Grid Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="g">
+            </parameter>
+         </command>
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Horizontal Tree Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="h">
+            </parameter>
+         </command>
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Radial Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="r">
+            </parameter>
+         </command>
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Spring Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="s">
+            </parameter>
+         </command>
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Tree Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="t">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="de.uni_koblenz.jgralab.tools.grapheditor.graph_toolbar">
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.select_layout"
+                  label="Select Layout"
+                  style="pulldown">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <control
+                  class="de.uni_koblenz.jgralab.tools.grapheditor.commands.SelectVertex"
+                  id="de.uni_koblenz.jgralab.tools.grapheditor.commands.select_vertex_field">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </control>
+         </toolbar>
+         <toolbar
+               id="de.uni_koblenz.jgralab.tools.grapheditor.edit_toolbar">
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.new_vertex_action"
+                  icon="icons/newVertex.gif"
+                  label="New Vertex"
+                  style="push"
+                  tooltip="Create a new Vertex">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.Export2DotAction"
+                  icon="icons/dot.gif"
+                  label="Export2Dot"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.unpin_action"
+                  icon="icons/unpin.gif"
+                  label="Unpin Vertex"
+                  style="push"
+                  tooltip="Unpin Vertex">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.pin_action"
+                  icon="icons/pin.gif"
+                  label="Pin Vertex"
+                  style="push"
+                  tooltip="Pin Vertex">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.filter_action"
+                  icon="icons/filter.gif"
+                  label="Filter"
+                  style="push"
+                  tooltip="Toggle filter vertices">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.delete_action"
+                  icon="icons/delete.gif"
+                  label="Delete selected elements"
+                  style="push"
+                  tooltip="Delete selected graph elements">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.new_edge_from_selection_action"
+                  icon="icons/newEdgeSelect.gif"
+                  label="New Edge from selection"
+                  style="push"
+                  tooltip="New Edge between selected Vertices">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.uni_koblenz.jgralab.tools.grapheditor.actions.new_edge_action"
+                  icon="icons/newEdge.gif"
+                  label="New Edge"
+                  style="push"
+                  tooltip="Create a new Edge">
+               <visibleWhen
+                     checkEnabled="true">
+                  <reference
+                        definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.select_layout"
+            name="Select Layout">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.commands.handler.ChangeLayoutAlgorithmHandler"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+            name="ChangeLayout">
+         <commandParameter
+               id="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+               name="Layout Algorithm"
+               optional="false">
+         </commandParameter>
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.NewVertexAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.new_vertex_action"
+            name="NewVertexAction">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.Export2DotAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.Export2DotAction"
+            name="Export2Dot">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.UnpinVertexAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.unpin_action"
+            name="Unpin Vertex">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.PinVertexAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.pin_action"
+            name="Pin Vertex">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.FilterVerticesAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.filter_action"
+            name="Filter">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.DeleteGraphElementsAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.delete_action"
+            name="Delete selected elements">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.NewEdgeFromSelectionAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.new_edge_from_selection_action"
+            name="New Edge from selection">
+      </command>
+      <command
+            defaultHandler="de.uni_koblenz.jgralab.tools.grapheditor.actions.NewEdgeAction"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.actions.new_edge_action"
+            name="New Edge">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.uni_koblenz.jgralab.tools.grapheditor.commands.handler.DoNothingHandler"
+            commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.select_layout">
+         <enabledWhen>
+            <reference
+                  definitionId="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+            </reference>
+         </enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.uni_koblenz.jgralab.tools.grapheditor.definition.selection_not_null">
+         <with
+               variable="selection">
+            <not>
+               <count
+                     value="0">
+               </count>
+            </not>
+         </with>
+      </definition>
+      <definition
+            id="de.uni_koblenz.jgralab.tools.grapheditor.definition.active_editor_not_null">
+         <with
+               variable="activeEditorId">
+            <equals
+                  value="de.uni_koblenz.jgralab.tools.grapheditor.editor_main">
+            </equals>
+         </with>
+      </definition>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.uni_koblenz.jgralab.tools.grapheditor.editor.GraphEditor"
+            default="false"
+            extensions="tg, xmi"
+            icon="icons/tg.gif"
+            id="de.uni_koblenz.jgralab.tools.grapheditor.editor_main"
+            name="Graph Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="grapheditor.jgralab_category"
+            name="JGraLab">
+      </category>
+      <wizard
+            category="grapheditor.jgralab_category"
+            class="de.uni_koblenz.jgralab.tools.grapheditor.wizards.NewGraphWizard"
+            icon="icons/new_tg.gif"
+            id="grapheditor.new_graph_wizard"
+            name="Graph">
+      </wizard>
+   </extension>
+   
+
+</plugin>

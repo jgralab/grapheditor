@@ -1,0 +1,21 @@
+<project basedir="." default="addLicenseHeaders" name="grapheditor">
+
+	<property name="license.file" value="license/gpl-3.0-header.txt" />
+	<property name="src.dir" value="src" />
+	<pathelement path="${istprojects.dir}/jgralab4eclipse/bin" />
+
+<path id="gremf.util.path">
+		<pathelement path="${istprojects.dir}/jgralab/bin" />
+		<pathelement path="${istprojects.dir}/common/bin" />
+		<fileset dir="${istprojects.dir}/common/lib" includes="**/*.jar" />
+	</path>
+
+<target name="addLicenseHeaders" if="license.file">
+		<java classname="de.uni_koblenz.ist.utilities.license_header.LicenseHeader" fork="true" dir=".">
+			<arg line="-i ${src.dir} -l ${license.file} -r" />
+			<classpath refid="gremf.util.path" />
+		</java>
+	</target>
+
+</project>
+
