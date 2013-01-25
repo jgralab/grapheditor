@@ -37,7 +37,6 @@ import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutAlgorithm;
-import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 
 import de.uni_koblenz.jgralab.Edge;
@@ -53,7 +52,6 @@ import de.uni_koblenz.jgralab.schema.Schema;
 import de.uni_koblenz.jgralab.tools.grapheditor.filter.IncidenceFilter;
 import de.uni_koblenz.jgralab.tools.grapheditor.jfaceviewerprovider.JGraLabContentProvider;
 import de.uni_koblenz.jgralab.tools.grapheditor.jfaceviewerprovider.JGraLabLabelProvider;
-import de.uni_koblenz.jgralab.tools.grapheditor.layout.algorithm.CircleLayoutAlgorithm;
 import de.uni_koblenz.jgralab.tools.grapheditor.properties.GraphElementPropertySheetPage;
 import de.uni_koblenz.jgralab.utilities.rsa2tg.Rsa2Tg;
 import de.uni_koblenz.jgralab.utilities.tg2schemagraph.SchemaGraph2Schema;
@@ -323,12 +321,13 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 			this.viewer.setFilters(new ViewerFilter[] { new IncidenceFilter(
 					this, graph.getFirstVertex(), this.pinMarker) });
 			this.viewer.setInput(graph);
-			this.viewer.setLayoutAlgorithm(new CircleLayoutAlgorithm());
+			this.viewer.getGraphControl().setDynamicLayout(false);
+			this.viewer.setLayoutAlgorithm(new SpringLayoutAlgorithm());
 			this.toggle = true;
 		} else {
 			this.viewer.setInput(graph);
-			this.viewer.setLayoutAlgorithm(new SpringLayoutAlgorithm(
-					LayoutStyles.NO_LAYOUT_NODE_RESIZING));
+			this.viewer.getGraphControl().setDynamicLayout(false);
+			this.viewer.setLayoutAlgorithm(new SpringLayoutAlgorithm());
 		}
 		this.viewer.applyLayout();
 	}
@@ -357,6 +356,7 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 	 * @param layout
 	 */
 	public void setLayout(LayoutAlgorithm layout) {
+		this.viewer.getGraphControl().setDynamicLayout(false);
 		this.viewer.setLayoutAlgorithm(layout, true);
 		this.viewer.applyLayout();
 		this.refresh();
@@ -541,7 +541,8 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 					this.viewer
 							.setFilters(new ViewerFilter[] { new IncidenceFilter(
 									this, (Vertex) element, this.pinMarker) });
-					this.viewer.setLayoutAlgorithm(new CircleLayoutAlgorithm());
+					this.viewer.getGraphControl().setDynamicLayout(false);
+					this.viewer.setLayoutAlgorithm(new SpringLayoutAlgorithm());
 					this.viewer.applyLayout();
 				} else {
 					// don't toggle
