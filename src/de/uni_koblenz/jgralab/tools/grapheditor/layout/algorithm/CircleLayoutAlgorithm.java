@@ -2,16 +2,16 @@ package de.uni_koblenz.jgralab.tools.grapheditor.layout.algorithm;
 
 import java.util.Vector;
 
+import org.eclipse.gef4.zest.core.viewers.GraphViewer;
+import org.eclipse.gef4.zest.core.widgets.GraphNode;
+import org.eclipse.gef4.zest.layouts.LayoutAlgorithm;
+import org.eclipse.gef4.zest.layouts.interfaces.EntityLayout;
+import org.eclipse.gef4.zest.layouts.interfaces.LayoutContext;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.zest.core.viewers.GraphViewer;
-import org.eclipse.zest.core.widgets.GraphNode;
-import org.eclipse.zest.layouts.LayoutAlgorithm;
-import org.eclipse.zest.layouts.interfaces.EntityLayout;
-import org.eclipse.zest.layouts.interfaces.LayoutContext;
 
 import de.uni_koblenz.jgralab.Graph;
 import de.uni_koblenz.jgralab.GraphElement;

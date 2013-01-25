@@ -3,12 +3,12 @@ package de.uni_koblenz.jgralab.tools.grapheditor.commands.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.gef4.zest.layouts.algorithms.GridLayoutAlgorithm;
+import org.eclipse.gef4.zest.layouts.algorithms.HorizontalShiftAlgorithm;
+import org.eclipse.gef4.zest.layouts.algorithms.RadialLayoutAlgorithm;
+import org.eclipse.gef4.zest.layouts.algorithms.SpringLayoutAlgorithm;
+import org.eclipse.gef4.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.zest.layouts.algorithms.GridLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.HorizontalShiftAlgorithm;
-import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 
 import de.uni_koblenz.jgralab.tools.grapheditor.editor.GraphEditor;
 import de.uni_koblenz.jgralab.tools.grapheditor.layout.algorithm.CircleLayoutAlgorithm;

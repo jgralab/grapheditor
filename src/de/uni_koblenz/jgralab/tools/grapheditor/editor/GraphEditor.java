@@ -7,6 +7,13 @@ import javax.xml.stream.XMLStreamException;
 import org.eclipse.core.commands.operations.UndoContext;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.gef4.zest.core.viewers.AbstractZoomableViewer;
+import org.eclipse.gef4.zest.core.viewers.GraphViewer;
+import org.eclipse.gef4.zest.core.viewers.IZoomableWorkbenchPart;
+import org.eclipse.gef4.zest.core.viewers.ZoomContributionViewItem;
+import org.eclipse.gef4.zest.core.widgets.ZestStyles;
+import org.eclipse.gef4.zest.layouts.LayoutAlgorithm;
+import org.eclipse.gef4.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -31,13 +38,6 @@ import org.eclipse.ui.operations.UndoRedoActionGroup;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
-import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
-import org.eclipse.zest.core.viewers.GraphViewer;
-import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
-import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
-import org.eclipse.zest.core.widgets.ZestStyles;
-import org.eclipse.zest.layouts.LayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 
 import de.uni_koblenz.jgralab.Edge;
 import de.uni_koblenz.jgralab.Graph;
@@ -74,6 +74,8 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 	 * Graph to edit
 	 */
 	private Graph graph;
+
+	private ZoomContributionViewItem toolbarZoomContributionViewItem;
 
 	/**
 	 * Marker to pin Vertices in Filter Mode
@@ -334,10 +336,8 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 	 * Adds a zoom function to the toolbar of this editor
 	 */
 	private void fillToolBar() {
-		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(
+		this.toolbarZoomContributionViewItem = new ZoomContributionViewItem(
 				this);
-		IActionBars bars = this.getEditorSite().getActionBars();
-		bars.getToolBarManager().add(toolbarZoomContributionViewItem);
 	}
 
 	/**
@@ -381,6 +381,9 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 				this.undoActionHandler);
 		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(),
 				this.redoActionHandler);
+		actionBars.getToolBarManager().removeAll();
+		actionBars.getToolBarManager()
+				.add(this.toolbarZoomContributionViewItem);
 	}
 
 	/**
@@ -494,6 +497,7 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 	 */
 	private void createGlobalActionHandlers() {
 		this.context = new UndoContext();
+
 		this.undoActionHandler = new UndoActionHandler(this.getEditorSite(),
 				this.context);
 		this.redoActionHandler = new RedoActionHandler(this.getEditorSite(),

@@ -12,28 +12,32 @@ import de.uni_koblenz.jgralab.schema.SetDomain;
 public class EditCollectionDomainWizard extends Wizard {
 
 	private EditCollectionDomainWizardPage page;
-	
+
 	private CollectionDomain domain;
 	private PCollection<?> value;
-	
-	public EditCollectionDomainWizard(CollectionDomain dom, PCollection<?> val){
+
+	public EditCollectionDomainWizard(CollectionDomain dom, PCollection<?> val) {
 		super();
 		this.domain = dom;
 		this.value = val;
 	}
-	
+
 	@Override
-	public void addPages(){
-		if(domain instanceof ListDomain)
-			page = new EditListDomainWizardPage((ListDomain)domain, (PVector<?>)value);
-		else 
-			page = new EditSetDomainWizardPage((SetDomain)domain, (PSet<?>)value);
-		addPage(page);
+	public void addPages() {
+		if (this.domain instanceof ListDomain) {
+			this.page = new EditListDomainWizardPage((ListDomain) this.domain,
+					(PVector<?>) this.value);
+		} else {
+			this.page = new EditSetDomainWizardPage((SetDomain) this.domain,
+					(PSet<?>) this.value);
+		}
+		this.addPage(this.page);
 	}
-	
+
 	@Override
 	public boolean performFinish() {
-		PVector<?> newValue = (PVector<?>) page.getViewer().getInput();
+		PCollection<?> newValue = (PCollection<?>) this.page.getViewer()
+				.getInput();
 		this.value = newValue;
 		return true;
 	}
@@ -42,7 +46,7 @@ public class EditCollectionDomainWizard extends Wizard {
 	 * @return the value
 	 */
 	public PCollection<?> getValue() {
-		return value;
+		return this.value;
 	}
 
 }
