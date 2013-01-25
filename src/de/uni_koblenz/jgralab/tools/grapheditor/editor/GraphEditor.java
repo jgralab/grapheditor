@@ -52,6 +52,7 @@ import de.uni_koblenz.jgralab.schema.Schema;
 import de.uni_koblenz.jgralab.tools.grapheditor.filter.IncidenceFilter;
 import de.uni_koblenz.jgralab.tools.grapheditor.jfaceviewerprovider.JGraLabContentProvider;
 import de.uni_koblenz.jgralab.tools.grapheditor.jfaceviewerprovider.JGraLabLabelProvider;
+import de.uni_koblenz.jgralab.tools.grapheditor.layout.algorithm.CircleLayoutAlgorithm;
 import de.uni_koblenz.jgralab.tools.grapheditor.properties.GraphElementPropertySheetPage;
 import de.uni_koblenz.jgralab.utilities.rsa2tg.Rsa2Tg;
 import de.uni_koblenz.jgralab.utilities.tg2schemagraph.SchemaGraph2Schema;
@@ -321,15 +322,12 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 			this.viewer.setFilters(new ViewerFilter[] { new IncidenceFilter(
 					this, graph.getFirstVertex(), this.pinMarker) });
 			this.viewer.setInput(graph);
-			this.viewer.getGraphControl().setDynamicLayout(false);
-			this.viewer.setLayoutAlgorithm(new SpringLayoutAlgorithm());
+			this.setLayout(new CircleLayoutAlgorithm());
 			this.toggle = true;
 		} else {
 			this.viewer.setInput(graph);
-			this.viewer.getGraphControl().setDynamicLayout(false);
-			this.viewer.setLayoutAlgorithm(new SpringLayoutAlgorithm());
+			this.setLayout(new SpringLayoutAlgorithm());
 		}
-		this.viewer.applyLayout();
 	}
 
 	/**
@@ -541,9 +539,8 @@ public class GraphEditor extends EditorPart implements IZoomableWorkbenchPart {
 					this.viewer
 							.setFilters(new ViewerFilter[] { new IncidenceFilter(
 									this, (Vertex) element, this.pinMarker) });
-					this.viewer.getGraphControl().setDynamicLayout(false);
-					this.viewer.setLayoutAlgorithm(new SpringLayoutAlgorithm());
-					this.viewer.applyLayout();
+
+					this.setLayout(new CircleLayoutAlgorithm());
 				} else {
 					// don't toggle
 					return;

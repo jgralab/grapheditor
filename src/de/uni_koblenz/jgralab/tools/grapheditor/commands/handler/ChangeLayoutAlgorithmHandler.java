@@ -11,6 +11,7 @@ import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 
 import de.uni_koblenz.jgralab.tools.grapheditor.editor.GraphEditor;
+import de.uni_koblenz.jgralab.tools.grapheditor.layout.algorithm.CircleLayoutAlgorithm;
 
 /**
  * Command handler that changes layout depending on given parameter
@@ -30,7 +31,7 @@ public class ChangeLayoutAlgorithmHandler extends AbstractHandler {
 		String algoName = event
 				.getParameter("de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout");
 		if (algoName.equals("c")) {
-			editor.setLayout(new SpringLayoutAlgorithm());
+			editor.setLayout(new CircleLayoutAlgorithm());
 		} else if (algoName.equals("g")) {
 			editor.setLayout(new GridLayoutAlgorithm());
 		} else if (algoName.equals("h")) {

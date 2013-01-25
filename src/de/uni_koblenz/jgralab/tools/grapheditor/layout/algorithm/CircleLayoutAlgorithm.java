@@ -9,11 +9,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.GraphNode;
-import org.eclipse.zest.layouts.LayoutEntity;
-import org.eclipse.zest.layouts.LayoutStyles;
-import org.eclipse.zest.layouts.algorithms.AbstractLayoutAlgorithm;
-import org.eclipse.zest.layouts.dataStructures.InternalNode;
-import org.eclipse.zest.layouts.dataStructures.InternalRelationship;
+import org.eclipse.zest.layouts.LayoutAlgorithm;
+import org.eclipse.zest.layouts.interfaces.EntityLayout;
+import org.eclipse.zest.layouts.interfaces.LayoutContext;
 
 import de.uni_koblenz.jgralab.Graph;
 import de.uni_koblenz.jgralab.GraphElement;
@@ -27,7 +25,7 @@ import de.uni_koblenz.jgralab.tools.grapheditor.editor.GraphEditor;
  * @author kheckelmann
  * 
  */
-public class CircleLayoutAlgorithm extends AbstractLayoutAlgorithm {
+public class CircleLayoutAlgorithm implements LayoutAlgorithm {
 
 	private GraphEditor editor;
 
@@ -36,14 +34,15 @@ public class CircleLayoutAlgorithm extends AbstractLayoutAlgorithm {
 
 	private Vertex root;
 
+	private LayoutContext context;
+
 	public CircleLayoutAlgorithm() {
-		super(LayoutStyles.NONE);
+
 	}
 
-	@Override
-	protected void applyLayoutInternal(InternalNode[] entitiesToLayout,
-			InternalRelationship[] relationshipsToConsider, double boundsX,
-			double boundsY, double boundsWidth, double boundsHeight) {
+	private void applyLayoutInternal(EntityLayout[] entitiesToLayout,
+			double boundsX, double boundsY, double boundsWidth,
+			double boundsHeight) {
 
 		this.totalSteps = entitiesToLayout.length;
 		double radius = Math.min(boundsWidth, boundsHeight) / 3.0;
@@ -51,55 +50,53 @@ public class CircleLayoutAlgorithm extends AbstractLayoutAlgorithm {
 		double midX = boundsWidth / 2.0;
 		double midY = boundsHeight / 2.0;
 
-		Vector<LayoutEntity> withoutRoot = new Vector<LayoutEntity>();
+		Vector<EntityLayout> withoutRoot = new Vector<EntityLayout>();
 
 		int anglecounter = 0;
 		for (this.currentStep = 0; this.currentStep < entitiesToLayout.length; this.currentStep++) {
-			LayoutEntity layoutEntity = entitiesToLayout[this.currentStep]
-					.getLayoutEntity();
-			if (entitiesToLayout[this.currentStep].getWidthInLayout() > 250) {
+			EntityLayout layoutEntity = entitiesToLayout[this.currentStep];
+			if (entitiesToLayout[this.currentStep].getSize().width > 250) {
 				entitiesToLayout[this.currentStep].setSize(250,
-						entitiesToLayout[this.currentStep].getHeightInLayout());
+						entitiesToLayout[this.currentStep].getSize().height);
 			}
-			Vertex vertex = (Vertex) ((GraphNode) layoutEntity.getGraphData())
+
+			Vertex vertex = (Vertex) ((GraphNode) layoutEntity.getItems()[0])
 					.getData();
 			if (this.editor.getPinMarker().isMarked(vertex)) {
 				// do not layout pinned
 			} else if (this.root.equals(vertex)) {
-				layoutEntity.setLocationInLayout(
-						midX - layoutEntity.getWidthInLayout() / 2.0, midY
-								- layoutEntity.getHeightInLayout() / 2.0);
+				layoutEntity.setLocation(midX - layoutEntity.getSize().width
+						/ 2.0, midY - layoutEntity.getSize().height / 2.0);
 			} else {
 				withoutRoot.add(layoutEntity);
 				double x = midX
 						+ (radius * Math.sin(angle * anglecounter) - layoutEntity
-								.getWidthInLayout() / 2.0);
+								.getSize().width / 2.0);
 				double y = midY
 						+ (radius * Math.cos(angle * anglecounter) - layoutEntity
-								.getHeightInLayout() / 2.0);
-				layoutEntity.setLocationInLayout(x, y);
+								.getSize().height / 2.0);
+				layoutEntity.setLocation(x, y);
 				anglecounter = anglecounter + 1;
 			}
-			this.fireProgressEvent(this.currentStep, this.totalSteps);
 		}
 
 		// shift from the middle of the circle to the outside until there is no
 		// intersection with neighbors
 		for (int i = 1; i < withoutRoot.size() - 1; i = i + 2) {
-			LayoutEntity layoutEntity = withoutRoot.get(i);
-			LayoutEntity leftLayoutEntity = withoutRoot.get(i - 1);
-			LayoutEntity rightLayoutEntity = withoutRoot.get(i + 1);
+			EntityLayout layoutEntity = withoutRoot.get(i);
+			EntityLayout leftLayoutEntity = withoutRoot.get(i - 1);
+			EntityLayout rightLayoutEntity = withoutRoot.get(i + 1);
 			double temprad = radius;
 
 			while (this.intersect(leftLayoutEntity, layoutEntity)) {
 				temprad += 10;
 				double x = midX
 						+ (temprad * Math.sin(angle * i) - layoutEntity
-								.getWidthInLayout() / 2.0);
+								.getSize().width / 2.0);
 				double y = midY
 						+ (temprad * Math.cos(angle * i) - layoutEntity
-								.getHeightInLayout() / 2.0);
-				layoutEntity.setLocationInLayout(x, y);
+								.getSize().height / 2.0);
+				layoutEntity.setLocation(x, y);
 				if (x <= 0 || x >= boundsWidth || y <= 0 || y >= boundsHeight) {
 					break;
 				}
@@ -108,53 +105,36 @@ public class CircleLayoutAlgorithm extends AbstractLayoutAlgorithm {
 				temprad += 10;
 				double x = midX
 						+ (temprad * Math.sin(angle * i) - layoutEntity
-								.getWidthInLayout() / 2.0);
+								.getSize().width / 2.0);
 				double y = midY
 						+ (temprad * Math.cos(angle * i) - layoutEntity
-								.getHeightInLayout() / 2.0);
-				layoutEntity.setLocationInLayout(x, y);
+								.getSize().height / 2.0);
+				layoutEntity.setLocation(x, y);
 				if (x <= 0 || x >= boundsWidth || y <= 0 || y >= boundsHeight) {
 					break;
 				}
 			}
 		}
-		this.fireProgressEnded(this.totalSteps);
 	}
 
-	private boolean intersect(LayoutEntity one, LayoutEntity two) {
+	private boolean intersect(EntityLayout one, EntityLayout two) {
 
-		double onex = one.getXInLayout() + one.getWidthInLayout() / 2.0;
-		double oney = one.getYInLayout() + one.getHeightInLayout() / 2.0;
-		double twox = two.getXInLayout() + two.getWidthInLayout() / 2.0;
-		double twoy = two.getYInLayout() + two.getHeightInLayout() / 2.0;
-		if (Math.abs(onex - twox) < (one.getWidthInLayout() / 2.0)
-				+ (two.getWidthInLayout() / 2.0)) {
-			if (Math.abs(oney - twoy) < (one.getHeightInLayout() / 2.0)
-					+ (two.getHeightInLayout() / 2.0)) {
+		double onex = one.getLocation().x + one.getSize().width / 2.0;
+		double oney = one.getLocation().y + one.getSize().height / 2.0;
+		double twox = two.getLocation().x + two.getSize().width / 2.0;
+		double twoy = two.getLocation().y + two.getSize().height / 2.0;
+
+		if (Math.abs(onex - twox) < (one.getSize().width / 2.0)
+				+ (two.getSize().width / 2.0)) {
+			if (Math.abs(oney - twoy) < (one.getSize().height / 2.0)
+					+ (two.getSize().height / 2.0)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	@Override
-	protected int getTotalNumberOfLayoutSteps() {
-		return this.totalSteps;
-	}
-
-	@Override
-	protected int getCurrentLayoutStep() {
-		return 0;
-	}
-
-	@Override
-	public void setLayoutArea(double x, double y, double width, double height) {
-	}
-
-	@Override
-	protected void preLayoutAlgorithm(InternalNode[] entitiesToLayout,
-			InternalRelationship[] relationshipsToConsider, double x, double y,
-			double width, double height) {
+	private void preLayoutAlgorithm() {
 
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
@@ -186,14 +166,16 @@ public class CircleLayoutAlgorithm extends AbstractLayoutAlgorithm {
 	}
 
 	@Override
-	protected void postLayoutAlgorithm(InternalNode[] entitiesToLayout,
-			InternalRelationship[] relationshipsToConsider) {
+	public void setLayoutContext(LayoutContext context) {
+		this.context = context;
 	}
 
 	@Override
-	protected boolean isValidConfiguration(boolean asynchronous,
-			boolean continuous) {
-		return true;
-	}
+	public void applyLayout(boolean clean) {
+		this.preLayoutAlgorithm();
+		this.applyLayoutInternal(this.context.getEntities(),
+				this.context.getBounds().x, this.context.getBounds().y,
+				this.context.getBounds().width, this.context.getBounds().height);
 
+	}
 }
