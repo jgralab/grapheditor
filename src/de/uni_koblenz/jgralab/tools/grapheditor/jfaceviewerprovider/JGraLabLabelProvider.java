@@ -1,12 +1,12 @@
 package de.uni_koblenz.jgralab.tools.grapheditor.jfaceviewerprovider;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.gef4.zest.core.viewers.EntityConnectionData;
-import org.eclipse.gef4.zest.core.viewers.IEntityStyleProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.zest.core.viewers.EntityConnectionData;
+import org.eclipse.zest.core.viewers.IEntityStyleProvider;
 import org.pcollections.PVector;
 
 import de.uni_koblenz.jgralab.Edge;

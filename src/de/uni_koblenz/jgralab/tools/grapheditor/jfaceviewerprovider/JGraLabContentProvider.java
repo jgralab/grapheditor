@@ -2,8 +2,8 @@ package de.uni_koblenz.jgralab.tools.grapheditor.jfaceviewerprovider;
 
 import java.util.ArrayList;
 
-import org.eclipse.gef4.zest.core.viewers.IGraphEntityRelationshipContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.zest.core.viewers.IGraphEntityRelationshipContentProvider;
 
 import de.uni_koblenz.jgralab.Edge;
 import de.uni_koblenz.jgralab.EdgeDirection;

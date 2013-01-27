@@ -1,6 +1,5 @@
 package de.uni_koblenz.jgralab.tools.grapheditor.commands;
 
-import org.eclipse.gef4.zest.core.viewers.GraphViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
@@ -16,6 +15,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
+import org.eclipse.zest.core.viewers.GraphViewer;
 
 import de.uni_koblenz.jgralab.Graph;
 import de.uni_koblenz.jgralab.Vertex;
