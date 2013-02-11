@@ -4,9 +4,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.zest.layouts.algorithms.DirectedGraphLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.GridLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.HorizontalShiftAlgorithm;
 import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.SpaceTreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 
@@ -42,6 +44,10 @@ public class ChangeLayoutAlgorithmHandler extends AbstractHandler {
 			editor.setLayout(new SpringLayoutAlgorithm());
 		} else if (algoName.equals("t")) {
 			editor.setLayout(new TreeLayoutAlgorithm());
+		} else if (algoName.equals("d")) {
+			editor.setLayout(new DirectedGraphLayoutAlgorithm());
+		} else if (algoName.equals("p")) {
+			editor.setLayout(new SpaceTreeLayoutAlgorithm());
 		}
 
 		return null;

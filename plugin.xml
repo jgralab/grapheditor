@@ -26,7 +26,7 @@
          </command>
          <command
                commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
-               label="Horizontal Tree Layout"
+               label="Horizontal Shift Layout"
                style="push">
             <parameter
                   name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
@@ -58,6 +58,24 @@
             <parameter
                   name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
                   value="t">
+            </parameter>
+         </command>
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Directed Graph Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="d">
+            </parameter>
+         </command>
+         <command
+               commandId="de.uni_koblenz.jgralab.tools.grapheditor.layout.commands.change_layout"
+               label="Space Tree Layout"
+               style="push">
+            <parameter
+                  name="de.uni_koblenz.jgralab.tools.grapheditor.parameter.select_layout"
+                  value="p">
             </parameter>
          </command>
       </menuContribution>
